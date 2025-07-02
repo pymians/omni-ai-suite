@@ -1,30 +1,27 @@
-import type { HeadersFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { Link, Outlet, useLoaderData, useRouteError } from "@remix-run/react";
+import type { HeadersFunction } from "@remix-run/node";
+import { Link, Outlet, useRouteError } from "@remix-run/react";
 import { boundary } from "@shopify/shopify-app-remix/server";
 import { AppProvider } from "@shopify/shopify-app-remix/react";
 import { NavMenu } from "@shopify/app-bridge-react";
 import polarisStyles from "@shopify/polaris/build/esm/styles.css?url";
 
-import { authenticate } from "../shopify.server";
+
 
 export const links = () => [{ rel: "stylesheet", href: polarisStyles }];
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  await authenticate.admin(request);
-
-  return { apiKey: process.env.SHOPIFY_API_KEY || "" };
-};
+// loader fonksiyonunu tamamen sildik.
 
 export default function App() {
-  const { apiKey } = useLoaderData<typeof loader>();
+  
+  const apiKey = "6c20c4649112c6dacf04ec1e944e021d";
 
   return (
     <AppProvider isEmbeddedApp apiKey={apiKey}>
       <NavMenu>
         <Link to="/app" rel="home">
-          Home
+          Ana Panel
         </Link>
-        <Link to="/app/additional">Additional page</Link>
+        <Link to="/app/additional">Ek Sayfa</Link>
       </NavMenu>
       <Outlet />
     </AppProvider>
