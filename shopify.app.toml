@@ -3,7 +3,7 @@
 client_id = "6c20c4649112c6dacf04ec1e944e021d"
 name = "omni-ai-suite"
 handle = "omni-ai-suite"
-application_url = "https://know-myers-outsourcing-priorities.trycloudflare.com"
+application_url = "https://omni-ai-suite.vercel.app"
 embedded = true
 
 [build]
@@ -23,10 +23,10 @@ api_version = "2025-07"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "read_products,read_customers,read_orders,write_marketing_events"
 
 [auth]
-redirect_urls = ["https://know-myers-outsourcing-priorities.trycloudflare.com/auth/callback", "https://know-myers-outsourcing-priorities.trycloudflare.com/auth/shopify/callback", "https://know-myers-outsourcing-priorities.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://omni-ai-suite.vercel.app/auth/callback", "https://omni-ai-suite.vercel.app/auth/shopify/callback", "https://omni-ai-suite.vercel.app/api/auth/callback"]
 
 [pos]
 embedded = false
