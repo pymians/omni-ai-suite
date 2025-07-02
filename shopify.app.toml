@@ -26,7 +26,7 @@ api_version = "2025-07"
 scopes = "read_products,read_customers,read_orders,write_marketing_events"
 
 [auth]
-redirect_urls = ["https://omni-ai-suite.vercel.app/auth/callback", "https://omni-ai-suite.vercel.app/auth/shopify/callback", "https://omni-ai-suite.vercel.app/api/auth/callback"]
+redirect_urls = ["https://omni-ai-suite.vercel.app/api/auth/callback"]
 
 [pos]
 embedded = false
