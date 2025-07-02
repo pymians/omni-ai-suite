@@ -1,9 +1,9 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "6c20c4649112c6dacf04ec1e944e021d"
-name = "omni-ai-suite"
+name = "Omni AI Suite"
 handle = "omni-ai-suite"
-application_url = "https://tech-eternal-angel-leader.trycloudflare.com"
+application_url = "https://omni-ai-suite.vercel.app"
 embedded = true
 
 [build]
@@ -26,7 +26,7 @@ api_version = "2025-07"
 scopes = "read_products,read_customers,read_orders,write_marketing_events"
 
 [auth]
-redirect_urls = ["https://tech-eternal-angel-leader.trycloudflare.com/auth/callback", "https://tech-eternal-angel-leader.trycloudflare.com/auth/shopify/callback", "https://tech-eternal-angel-leader.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://omni-ai-suite.vercel.app/auth/callback", "https://omni-ai-suite.vercel.app/auth/shopify/callback", "https://omni-ai-suite.vercel.app/api/auth/callback"]
 
 [pos]
 embedded = false
