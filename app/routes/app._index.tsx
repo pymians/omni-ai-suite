@@ -1,43 +1,46 @@
-import { Card, Text, BlockStack, Box } from "@shopify/polaris";
-import { FaUsers, FaChartLine, FaCreditCard, FaStar } from "react-icons/fa";
+import { Card, Text, BlockStack } from "@shopify/polaris";
+import { Activity, CreditCard, Users, Star } from "lucide-react";
 
 export default function Index() {
   return (
     <BlockStack gap="400">
       <Card>
-        <Text as="h2" variant="headingLg">
-          🏆 Başardık, Fatih!
-        </Text>
-        <Text as="p" variant="bodyMd">
-          Tüm teknik engelleri aştık ve artık Shopify içinden uygulaman başarıyla çalışıyor.
-          Şimdi geliştirme zamanı!
-        </Text>
+        <Text as="p" variant="bodyMd">Tüm teknik engelleri aştık ve artık Shopify içinden uygulaman başarıyla çalışıyor. Şimdi geliştirme zamanı!</Text>
       </Card>
 
-      <Box padding="400">
-        <BlockStack gap="400">
-          <Card>
-            <FaChartLine />
+      <BlockStack gap="400">
+        <Card>
+          <BlockStack>
+            <Activity size={20} />
             <Text as="h3" variant="headingMd">Tıklama</Text>
             <Text as="p" variant="bodyMd">2.456</Text>
-          </Card>
-          <Card>
-            <FaCreditCard />
+          </BlockStack>
+        </Card>
+
+        <Card>
+          <BlockStack>
+            <CreditCard size={20} />
             <Text as="h3" variant="headingMd">Harcama</Text>
             <Text as="p" variant="bodyMd">₺4.230</Text>
-          </Card>
-          <Card>
-            <FaUsers />
+          </BlockStack>
+        </Card>
+
+        <Card>
+          <BlockStack>
+            <Users size={20} />
             <Text as="h3" variant="headingMd">Kullanıcı</Text>
             <Text as="p" variant="bodyMd">1.204</Text>
-          </Card>
-          <Card>
-            <FaStar />
+          </BlockStack>
+        </Card>
+
+        <Card>
+          <BlockStack>
+            <Star size={20} />
             <Text as="h3" variant="headingMd">Dönüşüm</Text>
             <Text as="p" variant="bodyMd">314</Text>
-          </Card>
-        </BlockStack>
-      </Box>
+          </BlockStack>
+        </Card>
+      </BlockStack>
     </BlockStack>
   );
 }
