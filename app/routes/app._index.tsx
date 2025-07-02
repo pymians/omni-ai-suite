@@ -1,334 +1,122 @@
-import { useEffect } from "react";
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { useFetcher } from "@remix-run/react";
 import {
   Page,
+  Card,
   Layout,
   Text,
-  Card,
-  Button,
   BlockStack,
+  InlineGrid,
+  Icon,
+  Button,
   Box,
-  List,
-  Link,
-  InlineStack,
 } from "@shopify/polaris";
-import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
-import { authenticate } from "../shopify.server";
+import { FaFacebook, FaGoogle, FaInstagram } from "react-icons/fa";
+import { IoAnalytics, IoSparklesOutline, IoPeopleOutline, IoCashOutline, IoFlashOutline, IoImageOutline, IoMegaphoneOutline } from "react-icons/io5";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  await authenticate.admin(request);
-
-  return null;
+// --- SAHTE VERİLER ---
+// Genel Bakış Kartları için
+const statsData = {
+  toplamSatis: { value: "₺0", change: "+12.5% bu ay" },
+  donusumOrani: { value: "0%", change: "+0.0% geçen hafta" },
+  aiOptimizasyon: { value: "0%", change: "47 ürün optimize edildi" },
+  aktifZiyaretci: { value: "0", change: "Şu anda canlı" },
 };
-
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const { admin } = await authenticate.admin(request);
-  const color = ["Red", "Orange", "Yellow", "Green"][
-    Math.floor(Math.random() * 4)
-  ];
-  const response = await admin.graphql(
-    `#graphql
-      mutation populateProduct($product: ProductCreateInput!) {
-        productCreate(product: $product) {
-          product {
-            id
-            title
-            handle
-            status
-            variants(first: 10) {
-              edges {
-                node {
-                  id
-                  price
-                  barcode
-                  createdAt
-                }
-              }
-            }
-          }
-        }
-      }`,
-    {
-      variables: {
-        product: {
-          title: `${color} Snowboard`,
-        },
-      },
-    },
-  );
-  const responseJson = await response.json();
-
-  const product = responseJson.data!.productCreate!.product!;
-  const variantId = product.variants.edges[0]!.node!.id!;
-
-  const variantResponse = await admin.graphql(
-    `#graphql
-    mutation shopifyRemixTemplateUpdateVariant($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
-      productVariantsBulkUpdate(productId: $productId, variants: $variants) {
-        productVariants {
-          id
-          price
-          barcode
-          createdAt
-        }
-      }
-    }`,
-    {
-      variables: {
-        productId: product.id,
-        variants: [{ id: variantId, price: "100.00" }],
-      },
-    },
-  );
-
-  const variantResponseJson = await variantResponse.json();
-
-  return {
-    product: responseJson!.data!.productCreate!.product,
-    variant:
-      variantResponseJson!.data!.productVariantsBulkUpdate!.productVariants,
-  };
+// Satış Analizi Grafiği için
+const chartData = [
+    { name: 'Pzt', satis: 120 }, { name: 'Sal', satis: 200 }, { name: 'Çar', satis: 150 },
+    { name: 'Per', satis: 400 }, { name: 'Cum', satis: 300 }, { name: 'Cmt', satis: 500 },
+    { name: 'Paz', satis: 450 },
+];
+// Kanal Analizi Kartları için
+const channelData = {
+    facebook: { spend: '2,000 TL', roas: '9.0x' },
+    instagram: { spend: '1,500 TL', roas: '9.3x' },
+    google: { spend: '1,500 TL', roas: '6.6x' },
+    all: { spend: '5,000 TL', roas: '8.4x' }
 };
+// --------------------
 
 export default function Index() {
-  const fetcher = useFetcher<typeof action>();
-
-  const shopify = useAppBridge();
-  const isLoading =
-    ["loading", "submitting"].includes(fetcher.state) &&
-    fetcher.formMethod === "POST";
-  const productId = fetcher.data?.product?.id.replace(
-    "gid://shopify/Product/",
-    "",
-  );
-
-  useEffect(() => {
-    if (productId) {
-      shopify.toast.show("Product created");
-    }
-  }, [productId, shopify]);
-  const generateProduct = () => fetcher.submit({}, { method: "POST" });
-
   return (
-    <Page>
-      <TitleBar title="Remix app template">
-        <button variant="primary" onClick={generateProduct}>
-          Generate a product
-        </button>
-      </TitleBar>
-      <BlockStack gap="500">
-        <Layout>
-          <Layout.Section>
-            <Card>
+    <Page fullWidth>
+      <ui-title-bar title="Dashboard" />
+      <Layout>
+        {/* İstatistik Kartları */}
+        <Layout.Section>
+          <InlineGrid columns={{ xs: 1, sm: 2, md: 4 }} gap="400">
+            <Card roundedAbove="sm"><BlockStack gap="200"><InlineGrid gap="200" columns="auto 1fr" alignItems="center"><IoCashOutline size={20} /><Text as="h2" variant="headingMd">Toplam Satış</Text></InlineGrid><Text as="p" variant="headingXl">{statsData.toplamSatis.value}</Text><Text as="p" variant="bodyMd" tone="subdued">{statsData.toplamSatis.change}</Text></BlockStack></Card>
+            <Card roundedAbove="sm"><BlockStack gap="200"><InlineGrid gap="200" columns="auto 1fr" alignItems="center"><IoAnalytics size={20} /><Text as="h2" variant="headingMd">Dönüşüm Oranı</Text></InlineGrid><Text as="p" variant="headingXl">{statsData.donusumOrani.value}</Text><Text as="p" variant="bodyMd" tone="subdued">{statsData.donusumOrani.change}</Text></BlockStack></Card>
+            <Card roundedAbove="sm"><BlockStack gap="200"><InlineGrid gap="200" columns="auto 1fr" alignItems="center"><IoSparklesOutline size={20} /><Text as="h2" variant="headingMd">AI Optimizasyon</Text></InlineGrid><Text as="p" variant="headingXl">{statsData.aiOptimizasyon.value}</Text><Text as="p" variant="bodyMd" tone="subdued">{statsData.aiOptimizasyon.change}</Text></BlockStack></Card>
+            <Card roundedAbove="sm"><BlockStack gap="200"><InlineGrid gap="200" columns="auto 1fr" alignItems="center"><IoPeopleOutline size={20} /><Text as="h2" variant="headingMd">Aktif Ziyaretçi</Text></InlineGrid><Text as="p" variant="headingXl">{statsData.aktifZiyaretci.value}</Text><Text as="p" variant="bodyMd" tone="subdued">{statsData.aktifZiyaretci.change}</Text></BlockStack></Card>
+          </InlineGrid>
+        </Layout.Section>
+
+        {/* Satış Analizi Grafiği */}
+        <Layout.Section>
+           <Card roundedAbove="sm">
               <BlockStack gap="500">
-                <BlockStack gap="200">
-                  <Text as="h2" variant="headingMd">
-                    Congrats on creating a new Shopify app 🎉
-                  </Text>
-                  <Text variant="bodyMd" as="p">
-                    This embedded app template uses{" "}
-                    <Link
-                      url="https://shopify.dev/docs/apps/tools/app-bridge"
-                      target="_blank"
-                      removeUnderline
-                    >
-                      App Bridge
-                    </Link>{" "}
-                    interface examples like an{" "}
-                    <Link url="/app/additional" removeUnderline>
-                      additional page in the app nav
-                    </Link>
-                    , as well as an{" "}
-                    <Link
-                      url="https://shopify.dev/docs/api/admin-graphql"
-                      target="_blank"
-                      removeUnderline
-                    >
-                      Admin GraphQL
-                    </Link>{" "}
-                    mutation demo, to provide a starting point for app
-                    development.
-                  </Text>
-                </BlockStack>
-                <BlockStack gap="200">
-                  <Text as="h3" variant="headingMd">
-                    Get started with products
-                  </Text>
-                  <Text as="p" variant="bodyMd">
-                    Generate a product with GraphQL and get the JSON output for
-                    that product. Learn more about the{" "}
-                    <Link
-                      url="https://shopify.dev/docs/api/admin-graphql/latest/mutations/productCreate"
-                      target="_blank"
-                      removeUnderline
-                    >
-                      productCreate
-                    </Link>{" "}
-                    mutation in our API references.
-                  </Text>
-                </BlockStack>
-                <InlineStack gap="300">
-                  <Button loading={isLoading} onClick={generateProduct}>
-                    Generate a product
-                  </Button>
-                  {fetcher.data?.product && (
-                    <Button
-                      url={`shopify:admin/products/${productId}`}
-                      target="_blank"
-                      variant="plain"
-                    >
-                      View product
-                    </Button>
-                  )}
-                </InlineStack>
-                {fetcher.data?.product && (
-                  <>
-                    <Text as="h3" variant="headingMd">
-                      {" "}
-                      productCreate mutation
-                    </Text>
-                    <Box
-                      padding="400"
-                      background="bg-surface-active"
-                      borderWidth="025"
-                      borderRadius="200"
-                      borderColor="border"
-                      overflowX="scroll"
-                    >
-                      <pre style={{ margin: 0 }}>
-                        <code>
-                          {JSON.stringify(fetcher.data.product, null, 2)}
-                        </code>
-                      </pre>
-                    </Box>
-                    <Text as="h3" variant="headingMd">
-                      {" "}
-                      productVariantsBulkUpdate mutation
-                    </Text>
-                    <Box
-                      padding="400"
-                      background="bg-surface-active"
-                      borderWidth="025"
-                      borderRadius="200"
-                      borderColor="border"
-                      overflowX="scroll"
-                    >
-                      <pre style={{ margin: 0 }}>
-                        <code>
-                          {JSON.stringify(fetcher.data.variant, null, 2)}
-                        </code>
-                      </pre>
-                    </Box>
-                  </>
-                )}
+                <Text as="h2" variant="headingMd">Satış Analizi</Text>
+                <div style={{height: '250px'}}>
+                  <ResponsiveContainer width="100%" height="100%"><LineChart data={chartData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}><XAxis dataKey="name" stroke="#6D7175" /><YAxis stroke="#6D7175" /><Tooltip /><Line type="monotone" dataKey="satis" stroke="#5A31F4" strokeWidth={2} /></LineChart></ResponsiveContainer>
+                </div>
               </BlockStack>
             </Card>
-          </Layout.Section>
-          <Layout.Section variant="oneThird">
-            <BlockStack gap="500">
-              <Card>
-                <BlockStack gap="200">
-                  <Text as="h2" variant="headingMd">
-                    App template specs
-                  </Text>
-                  <BlockStack gap="200">
-                    <InlineStack align="space-between">
-                      <Text as="span" variant="bodyMd">
-                        Framework
-                      </Text>
-                      <Link
-                        url="https://remix.run"
-                        target="_blank"
-                        removeUnderline
-                      >
-                        Remix
-                      </Link>
-                    </InlineStack>
-                    <InlineStack align="space-between">
-                      <Text as="span" variant="bodyMd">
-                        Database
-                      </Text>
-                      <Link
-                        url="https://www.prisma.io/"
-                        target="_blank"
-                        removeUnderline
-                      >
-                        Prisma
-                      </Link>
-                    </InlineStack>
-                    <InlineStack align="space-between">
-                      <Text as="span" variant="bodyMd">
-                        Interface
-                      </Text>
-                      <span>
-                        <Link
-                          url="https://polaris.shopify.com"
-                          target="_blank"
-                          removeUnderline
-                        >
-                          Polaris
-                        </Link>
-                        {", "}
-                        <Link
-                          url="https://shopify.dev/docs/apps/tools/app-bridge"
-                          target="_blank"
-                          removeUnderline
-                        >
-                          App Bridge
-                        </Link>
-                      </span>
-                    </InlineStack>
-                    <InlineStack align="space-between">
-                      <Text as="span" variant="bodyMd">
-                        API
-                      </Text>
-                      <Link
-                        url="https://shopify.dev/docs/api/admin-graphql"
-                        target="_blank"
-                        removeUnderline
-                      >
-                        GraphQL API
-                      </Link>
-                    </InlineStack>
-                  </BlockStack>
-                </BlockStack>
-              </Card>
-              <Card>
-                <BlockStack gap="200">
-                  <Text as="h2" variant="headingMd">
-                    Next steps
-                  </Text>
-                  <List>
-                    <List.Item>
-                      Build an{" "}
-                      <Link
-                        url="https://shopify.dev/docs/apps/getting-started/build-app-example"
-                        target="_blank"
-                        removeUnderline
-                      >
-                        {" "}
-                        example app
-                      </Link>{" "}
-                      to get started
-                    </List.Item>
-                    <List.Item>
-                      Explore Shopify’s API with{" "}
-                      <Link
-                        url="https://shopify.dev/docs/apps/tools/graphiql-admin-api"
-                        target="_blank"
-                        removeUnderline
-                      >
-                        GraphiQL
-                      </Link>
-                    </List.Item>
-                  </List>
-                </BlockStack>
-              </Card>
-            </BlockStack>
-          </Layout.Section>
-        </Layout>
-      </BlockStack>
+        </Layout.Section>
+
+        {/* Hızlı Aksiyonlar Bölümü */}
+        <Layout.Section>
+          <InlineGrid columns={{ xs: 1, sm: 1, md: 3 }} gap="400">
+            <div className="ActionCard ActionCard--green"><Card roundedAbove="sm"><BlockStack gap="300"><Icon source={() => <IoFlashOutline size={24} color="#008060" />} /><Text as="h3" variant="headingMd">Hızlı Optimizasyon</Text><Text as="p" tone="subdued">Seçili ürünleri AI ile optimize edin</Text><Box paddingBlockStart="200"><Button>Başlat</Button></Box></BlockStack></Card></div>
+            <div className="ActionCard ActionCard--purple"><Card roundedAbove="sm"><BlockStack gap="300"><Icon source={() => <IoImageOutline size={24} color="#5A31F4" />} /><Text as="h3" variant="headingMd">Görsel Oluştur</Text><Text as="p" tone="subdued">AI ile ürün görsellerinden kampanya oluşturun</Text><Box paddingBlockStart="200"><Button>Oluştur</Button></Box></BlockStack></Card></div>
+            <div className="ActionCard ActionCard--pink"><Card roundedAbove="sm"><BlockStack gap="300"><Icon source={() => <IoMegaphoneOutline size={24} color="#BC2A43" />} /><Text as="h3" variant="headingMd">Kampanya Önerisi</Text><Text as="p" tone="subdued">AI destekli pazarlama kampanyaları</Text><Box paddingBlockStart="200"><Button>İncele</Button></Box></BlockStack></Card></div>
+          </InlineGrid>
+        </Layout.Section>
+        
+        {/* --- YENİ KANAL PERFORMANSI KARTLARI --- */}
+        <Layout.Section>
+            <Box paddingBlockStart="200" paddingBlockEnd="200">
+                <Text variant="headingLg" as="h2">Kanal Performansı</Text>
+            </Box>
+            <InlineGrid columns={{ xs: 1, sm: 2, md: 4}} gap="400">
+                <Card roundedAbove="sm">
+                    <BlockStack gap="200">
+                        <InlineGrid gap="200" columns="auto 1fr" alignItems="center"><Icon source={()=><FaFacebook color="#1877F2" />} /><Text as="h3" variant="headingMd">Facebook</Text></InlineGrid>
+                        <Text as="p" tone="subdued">Harcama: {channelData.facebook.spend}</Text>
+                        <Text as="p" tone="subdued">ROAS: {channelData.facebook.roas}</Text>
+                    </BlockStack>
+                </Card>
+                <Card roundedAbove="sm">
+                    <BlockStack gap="200">
+                        <InlineGrid gap="200" columns="auto 1fr" alignItems="center"><Icon source={()=><FaInstagram color="#E4405F" />} /><Text as="h3" variant="headingMd">Instagram</Text></InlineGrid>
+                        <Text as="p" tone="subdued">Harcama: {channelData.instagram.spend}</Text>
+                        <Text as="p" tone="subdued">ROAS: {channelData.instagram.roas}</Text>
+                    </BlockStack>
+                </Card>
+                <Card roundedAbove="sm">
+                    <BlockStack gap="200">
+                        <InlineGrid gap="200" columns="auto 1fr" alignItems="center"><Icon source={()=><FaGoogle color="#4285F4" />} /><Text as="h3" variant="headingMd">Google</Text></InlineGrid>
+                        <Text as="p" tone="subdued">Harcama: {channelData.google.spend}</Text>
+                        <Text as="p" tone="subdued">ROAS: {channelData.google.roas}</Text>
+                    </BlockStack>
+                </Card>
+                <Card roundedAbove="sm">
+                    <BlockStack gap="200">
+                        <InlineGrid gap="200" columns="auto 1fr" alignItems="center"><Text as="h3" variant="headingMd">Facebook & Instagram</Text></InlineGrid>
+                        <Text as="p" tone="subdued">Harcama: {channelData.all.spend}</Text>
+                        <Text as="p" tone="subdued">ROAS: {channelData.all.roas}</Text>
+                    </BlockStack>
+                </Card>
+            </InlineGrid>
+        </Layout.Section>
+      </Layout>
     </Page>
   );
 }
