@@ -120,21 +120,34 @@ export default function Index() {
         {/* CHANNEL BUDGETS */}
         <Grid columns={{ xs: 1, md: 2 }}>
           <Card>
-            <Text variant="headingSm" as="h3">Facebook</Text>
-            <Text as="p">Daily Budget: $100.00<br/>ROAS: 6.2x</Text>
-          </Card>
-          <Card>
-            <Text variant="headingSm" as="h3">Instagram</Text>
-            <Text as="p">Daily Budget: $75.00<br/>ROAS: 5.8x</Text>
-          </Card>
-          <Card>
-            <Text variant="headingSm" as="h3">Google</Text>
-            <Text as="p">Daily Budget: $50.00<br/>ROAS: 4.2x</Text>
-          </Card>
-          <Card>
-            <Text variant="headingSm" as="h3">Meta Suite</Text>
-            <Text as="p">Daily Budget: $110.00<br/>ROAS: 7.0x</Text>
-          </Card>
+  <BlockStack gap="100">
+    <Text variant="headingSm" as="h3">Facebook</Text>
+    <Text as="p">Daily Budget: $100.00</Text>
+    <Text as="p">ROAS: 6.2x</Text>
+  </BlockStack>
+</Card>
+<Card>
+  <BlockStack gap="100">
+    <Text variant="headingSm" as="h3">Instagram</Text>
+    <Text as="p">Daily Budget: $75.00</Text>
+    <Text as="p">ROAS: 5.2x</Text>
+  </BlockStack>
+</Card>
+<Card>
+  <BlockStack gap="100">
+    <Text variant="headingSm" as="h3">Google</Text>
+    <Text as="p">Daily Budget: $50.00</Text>
+    <Text as="p">ROAS: 4.2x</Text>
+  </BlockStack>
+</Card>
+<Card>
+  <BlockStack gap="100">
+    <Text variant="headingSm" as="h3">Meta Suite</Text>
+    <Text as="p">Daily Budget: $110.00</Text>
+    <Text as="p">ROAS: 6.2x</Text>
+  </BlockStack>
+</Card>
+
         </Grid>
       </BlockStack>
     </Page>
