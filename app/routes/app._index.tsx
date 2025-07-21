@@ -12,13 +12,10 @@ import {
   Rocket,
   BarChart3,
   SearchCode,
-  LayoutDashboard,
-  DollarSign,
-  ShoppingCart,
-  Activity,
-  CreditCard,
-  Users,
-  Star
+  Sparkles,
+  Languages,
+  TextQuote,
+  ShieldCheck
 } from "lucide-react";
 
 export default function Index() {
@@ -33,17 +30,16 @@ export default function Index() {
                 Welcome to <b>Omni AI Suite</b>
               </Text>
               <Text as="p" variant="bodyMd">
-                AI-driven automation and optimization for next-level campaign performance.
+                Create smarter Shopify campaigns with AI-powered text, multilingual content, and predictive insights — no external ads platforms required.
               </Text>
               <InlineStack gap="400">
-                <Button icon={Rocket}>Create Campaign</Button>
-                <Button icon={SearchCode} variant="secondary">Analyze Competitor</Button>
-                <Button icon={BarChart3} variant="secondary">View Reports</Button>
+                <Button icon={Rocket}>Create AI Campaign</Button>
+                <Button icon={Sparkles} variant="secondary">Try Prompt Console</Button>
               </InlineStack>
             </BlockStack>
           </Card>
 
-          <Card padding="0">
+          <Card>
             <img
               alt="Omni AI Banner"
               src="https://placehold.co/600x280/0b76ef/ffffff?text=Omni+AI+Suite"
@@ -52,102 +48,94 @@ export default function Index() {
           </Card>
         </Grid>
 
-        {/* INSIGHTS */}
+        {/* AI INSIGHTS */}
         <Card>
           <BlockStack gap="200">
-            <Badge tone="success">
-              🎉 Your Summer Sale campaign achieved 225% ROAS in the last 3 days!
-            </Badge>
-            <Badge tone="warning">
-              ⚠️ CTR on Google Ads dropped below 1.5% – consider updating visuals.
-            </Badge>
-            <Badge tone="info">
-              📊 Try running competitor analysis to discover new keyword gaps.
-            </Badge>
+            <Badge tone="success">🎯 AI says: This headline has high persuasive power.</Badge>
+            <Badge tone="info">🧠 Tip: Add urgency keywords like "limited time" for more conversions.</Badge>
+            <Badge tone="warning">⚠️ Avoid overly generic phrases — specificity increases CTR.</Badge>
           </BlockStack>
         </Card>
 
-        {/* METRICS */}
-        <Grid columns={{ xs: 1, sm: 2, md: 4 }}>
+        {/* TOOLS OVERVIEW */}
+        <Grid columns={{ xs: 1, sm: 2, md: 3 }}>
           <Card>
             <BlockStack>
-              <InlineStack align="center" gap="200">
-                <Activity size={18} />
-                <Text variant="headingSm" as="h3">Clicks</Text>
+              <InlineStack gap="200" align="center">
+                <Rocket size={20} />
+                <Text variant="headingMd" as="h3">AI Campaign Builder</Text>
               </InlineStack>
-              <Text as="p">2,456</Text>
+              <Text as="p" variant="bodySm">
+                Select product → Choose tone → Let AI write your campaign. Launch-ready content in seconds.
+              </Text>
+              <Button variant="primary">Start Building</Button>
             </BlockStack>
           </Card>
-          <Card>
-            <BlockStack>
-              <InlineStack align="center" gap="200">
-                <CreditCard size={18} />
-                <Text variant="headingSm" as="h3">Spend</Text>
-              </InlineStack>
-              <Text as="p">$120.57</Text>
-            </BlockStack>
-          </Card>
-          <Card>
-            <BlockStack>
-              <InlineStack align="center" gap="200">
-                <ShoppingCart size={18} />
-                <Text variant="headingSm" as="h3">Revenue</Text>
-              </InlineStack>
-              <Text as="p">$1,054.60</Text>
-            </BlockStack>
-          </Card>
-          <Card>
-            <BlockStack>
-              <InlineStack align="center" gap="200">
-                <DollarSign size={18} />
-                <Text variant="headingSm" as="h3">ROAS</Text>
-              </InlineStack>
-              <Text as="p">8.75x</Text>
-            </BlockStack>
-          </Card>
-        </Grid>
 
-        {/* GRAPH PLACEHOLDER */}
-        <Card>
-          <Text variant="headingMd" as="h3">Sales Analysis</Text>
-          <img
-            alt="Sales Graph"
-            src="https://placehold.co/700x200/f3f4f6/999?text=Graph+Coming+Soon"
-            style={{ width: "100%", marginTop: 10 }}
-          />
-        </Card>
-
-        {/* CHANNEL BUDGETS */}
-        <Grid columns={{ xs: 1, md: 2 }}>
           <Card>
-  <BlockStack gap="100">
-    <Text variant="headingSm" as="h3">Facebook</Text>
-    <Text as="p">Daily Budget: $100.00</Text>
-    <Text as="p">ROAS: 6.2x</Text>
-  </BlockStack>
-</Card>
-<Card>
-  <BlockStack gap="100">
-    <Text variant="headingSm" as="h3">Instagram</Text>
-    <Text as="p">Daily Budget: $75.00</Text>
-    <Text as="p">ROAS: 5.2x</Text>
-  </BlockStack>
-</Card>
-<Card>
-  <BlockStack gap="100">
-    <Text variant="headingSm" as="h3">Google</Text>
-    <Text as="p">Daily Budget: $50.00</Text>
-    <Text as="p">ROAS: 4.2x</Text>
-  </BlockStack>
-</Card>
-<Card>
-  <BlockStack gap="100">
-    <Text variant="headingSm" as="h3">Meta Suite</Text>
-    <Text as="p">Daily Budget: $110.00</Text>
-    <Text as="p">ROAS: 6.2x</Text>
-  </BlockStack>
-</Card>
+            <BlockStack>
+              <InlineStack gap="200" align="center">
+                <BarChart3 size={20} />
+                <Text variant="headingMd" as="h3">Simulated Performance</Text>
+              </InlineStack>
+              <Text as="p" variant="bodySm">
+                View AI-predicted success metrics before launch. Make data-free decisions smarter.
+              </Text>
+              <Button>Analyze Now</Button>
+            </BlockStack>
+          </Card>
 
+          <Card>
+            <BlockStack>
+              <InlineStack gap="200" align="center">
+                <SearchCode size={20} />
+                <Text variant="headingMd" as="h3">AI Prompt Console</Text>
+              </InlineStack>
+              <Text as="p" variant="bodySm">
+                Write prompts, get instant content. Custom ads, posts, hooks — generated on command.
+              </Text>
+              <Button>Open Console</Button>
+            </BlockStack>
+          </Card>
+
+          <Card>
+            <BlockStack>
+              <InlineStack gap="200" align="center">
+                <Languages size={20} />
+                <Text variant="headingMd" as="h3">Multilingual Content</Text>
+              </InlineStack>
+              <Text as="p" variant="bodySm">
+                Instantly translate all content into 8+ languages. Localized. Ready-to-publish.
+              </Text>
+              <Button>Translate</Button>
+            </BlockStack>
+          </Card>
+
+          <Card>
+            <BlockStack>
+              <InlineStack gap="200" align="center">
+                <TextQuote size={20} />
+                <Text variant="headingMd" as="h3">Content Variations</Text>
+              </InlineStack>
+              <Text as="p" variant="bodySm">
+                Generate multiple ad variations. Test tones, styles, calls-to-action — pick what fits.
+              </Text>
+              <Button>Try Variants</Button>
+            </BlockStack>
+          </Card>
+
+          <Card>
+            <BlockStack>
+              <InlineStack gap="200" align="center">
+                <ShieldCheck size={20} />
+                <Text variant="headingMd" as="h3">Privacy & Compliance</Text>
+              </InlineStack>
+              <Text as="p" variant="bodySm">
+                Everything AI generates meets GDPR and Shopify marketing guidelines by design.
+              </Text>
+              <Button>Learn More</Button>
+            </BlockStack>
+          </Card>
         </Grid>
       </BlockStack>
     </Page>
