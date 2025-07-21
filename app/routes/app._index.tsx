@@ -1,164 +1,141 @@
 import {
+  Page,
   Card,
   BlockStack,
-  Text,
   InlineStack,
-  Page,
-  Grid,
-  Select,
+  Text,
   Button,
+  Grid,
   Badge
 } from "@shopify/polaris";
 import {
+  Rocket,
+  BarChart3,
+  SearchCode,
+  LayoutDashboard,
+  DollarSign,
+  ShoppingCart,
   Activity,
   CreditCard,
   Users,
-  Star,
-  BarChart3,
-  Settings2,
-  Languages,
-  ShieldCheck,
-  Rocket,
-  Sparkles
+  Star
 } from "lucide-react";
-import { useState } from "react";
 
 export default function Index() {
-  const [selectedLang, setSelectedLang] = useState("en");
-
-  const langs = [
-    { label: "English", value: "en" },
-    { label: "Türkçe", value: "tr" },
-    { label: "Deutsch", value: "de" },
-    { label: "Español", value: "es" },
-    { label: "Français", value: "fr" },
-    { label: "Português", value: "pt" },
-    { label: "Italiano", value: "it" },
-    { label: "日本語", value: "ja" }
-  ];
-
   return (
-    <Page
-      title="Omni AI Suite Dashboard"
-      primaryAction={{
-        content: "🚀 Create Campaign",
-        onAction: () => console.log("Campaign Creation"),
-      }}
-    >
-      <BlockStack gap="400">
-        <Card padding="600">
-          <InlineStack align="space-between">
-            <BlockStack gap="200">
+    <Page fullWidth>
+      <BlockStack gap="600">
+        {/* HERO */}
+        <Grid columns={{ xs: 1, md: 2 }}>
+          <Card padding="600">
+            <BlockStack gap="300">
               <Text variant="heading2xl" as="h1">
                 Welcome to <b>Omni AI Suite</b>
               </Text>
               <Text as="p" variant="bodyMd">
-                Manage your advertising like a pro. Omni AI helps you analyze, optimize, and scale your store across platforms with multilingual automation.
+                AI-driven automation and optimization for next-level campaign performance.
               </Text>
-              <Badge tone="success">Connected</Badge>
+              <InlineStack gap="400">
+                <Button icon={Rocket}>Create Campaign</Button>
+                <Button icon={SearchCode} variant="secondary">Analyze Competitor</Button>
+                <Button icon={BarChart3} variant="secondary">View Reports</Button>
+              </InlineStack>
             </BlockStack>
-            <Select
-              labelHidden
-              label="Language"
-              options={langs}
-              value={selectedLang}
-              onChange={(v) => setSelectedLang(v)}
+          </Card>
+
+          <Card padding="0">
+            <img
+              alt="Omni AI Banner"
+              src="https://placehold.co/600x280/0b76ef/ffffff?text=Omni+AI+Suite"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
-          </InlineStack>
+          </Card>
+        </Grid>
+
+        {/* INSIGHTS */}
+        <Card>
+          <BlockStack gap="200">
+            <Badge tone="success">
+              🎉 Your Summer Sale campaign achieved 225% ROAS in the last 3 days!
+            </Badge>
+            <Badge tone="warning">
+              ⚠️ CTR on Google Ads dropped below 1.5% – consider updating visuals.
+            </Badge>
+            <Badge tone="info">
+              📊 Try running competitor analysis to discover new keyword gaps.
+            </Badge>
+          </BlockStack>
         </Card>
 
+        {/* METRICS */}
         <Grid columns={{ xs: 1, sm: 2, md: 4 }}>
           <Card>
             <BlockStack>
-              <InlineStack gap="200" align="center">
-                <Activity size={20} />
-                <Text variant="headingMd" as="h3">Clicks</Text>
+              <InlineStack align="center" gap="200">
+                <Activity size={18} />
+                <Text variant="headingSm" as="h3">Clicks</Text>
               </InlineStack>
-              <Text as="p" variant="bodyMd">2,456</Text>
+              <Text as="p">2,456</Text>
             </BlockStack>
           </Card>
-
           <Card>
             <BlockStack>
-              <InlineStack gap="200" align="center">
-                <CreditCard size={20} />
-                <Text variant="headingMd" as="h3">Spend</Text>
+              <InlineStack align="center" gap="200">
+                <CreditCard size={18} />
+                <Text variant="headingSm" as="h3">Spend</Text>
               </InlineStack>
-              <Text as="p" variant="bodyMd">$4,230</Text>
+              <Text as="p">$120.57</Text>
             </BlockStack>
           </Card>
-
           <Card>
             <BlockStack>
-              <InlineStack gap="200" align="center">
-                <Users size={20} />
-                <Text variant="headingMd" as="h3">Users</Text>
+              <InlineStack align="center" gap="200">
+                <ShoppingCart size={18} />
+                <Text variant="headingSm" as="h3">Revenue</Text>
               </InlineStack>
-              <Text as="p" variant="bodyMd">1,204</Text>
+              <Text as="p">$1,054.60</Text>
             </BlockStack>
           </Card>
-
           <Card>
             <BlockStack>
-              <InlineStack gap="200" align="center">
-                <Star size={20} />
-                <Text variant="headingMd" as="h3">Conversions</Text>
+              <InlineStack align="center" gap="200">
+                <DollarSign size={18} />
+                <Text variant="headingSm" as="h3">ROAS</Text>
               </InlineStack>
-              <Text as="p" variant="bodyMd">314</Text>
+              <Text as="p">8.75x</Text>
             </BlockStack>
           </Card>
         </Grid>
 
-        <Grid columns={{ xs: 1, sm: 2, md: 3 }}>
-          <Card>
-            <BlockStack>
-              <InlineStack gap="200" align="center">
-                <BarChart3 size={20} />
-                <Text variant="headingMd" as="h3">Campaign Analytics</Text>
-              </InlineStack>
-              <Text as="p" variant="bodySm">
-                View performance breakdowns and discover which ads convert best.
-              </Text>
-              <Button variant="primary">View Analytics</Button>
-            </BlockStack>
-          </Card>
-
-          <Card>
-            <BlockStack>
-              <InlineStack gap="200" align="center">
-                <Settings2 size={20} />
-                <Text variant="headingMd" as="h3">Automation Settings</Text>
-              </InlineStack>
-              <Text as="p" variant="bodySm">
-                Configure rules for retargeting, budget management and timing.
-              </Text>
-              <Button>Configure</Button>
-            </BlockStack>
-          </Card>
-
-          <Card>
-            <BlockStack>
-              <InlineStack gap="200" align="center">
-                <Languages size={20} />
-                <Text variant="headingMd" as="h3">Multilingual Content</Text>
-              </InlineStack>
-              <Text as="p" variant="bodySm">
-                Use AI to localize your ad texts for global reach.
-              </Text>
-              <Button>Manage Content</Button>
-            </BlockStack>
-          </Card>
-        </Grid>
-
-        <Card padding="500">
-          <InlineStack gap="200" align="center">
-            <ShieldCheck size={20} />
-            <Text variant="headingMd" as="h3">Privacy & Compliance</Text>
-          </InlineStack>
-          <Text as="p" variant="bodySm">
-            All campaigns comply with GDPR, CCPA, and Shopify policies.
-          </Text>
+        {/* GRAPH PLACEHOLDER */}
+        <Card>
+          <Text variant="headingMd" as="h3">Sales Analysis</Text>
+          <img
+            alt="Sales Graph"
+            src="https://placehold.co/700x200/f3f4f6/999?text=Graph+Coming+Soon"
+            style={{ width: "100%", marginTop: 10 }}
+          />
         </Card>
+
+        {/* CHANNEL BUDGETS */}
+        <Grid columns={{ xs: 1, md: 2 }}>
+          <Card>
+            <Text variant="headingSm" as="h3">Facebook</Text>
+            <Text as="p">Daily Budget: $100.00<br/>ROAS: 6.2x</Text>
+          </Card>
+          <Card>
+            <Text variant="headingSm" as="h3">Instagram</Text>
+            <Text as="p">Daily Budget: $75.00<br/>ROAS: 5.8x</Text>
+          </Card>
+          <Card>
+            <Text variant="headingSm" as="h3">Google</Text>
+            <Text as="p">Daily Budget: $50.00<br/>ROAS: 4.2x</Text>
+          </Card>
+          <Card>
+            <Text variant="headingSm" as="h3">Meta Suite</Text>
+            <Text as="p">Daily Budget: $110.00<br/>ROAS: 7.0x</Text>
+          </Card>
+        </Grid>
       </BlockStack>
     </Page>
   );
